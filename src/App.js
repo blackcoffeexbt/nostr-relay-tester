@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import NDK, {NDKFilter, NDKPrivateKeySigner, NDKEvent, NDKNip07Signer} from "@nostr-dev-kit/ndk";
+import NDK, {NDKFilter, NDKPrivateKeySigner, NDKEvent, NDKDVMJobResult, NDKNip07Signer} from "@nostr-dev-kit/ndk";
 import Header from './components/Header';
 import LeftColumn from './components/LeftColumn';
 import CenterColumn from './components/CenterColumn';
@@ -19,6 +19,8 @@ export default function App() {
     const connectRelay = async (relayURI) => {
         setStatus("connecting");
         try {
+            const privateKey = localStorage.getItem('localSignerPrivateKey');
+
             const nip07signer = await new NDKNip07Signer();
             const ndkInstance = new NDK({
                 signer: nip07signer,
@@ -63,7 +65,8 @@ export default function App() {
                 const {id, kind, pubkey, created_at, tags, content, sig} = ndkEvent;
                 setMessages(prevMessages => [{
                     type: "from",
-                    content: JSON.stringify({id, kind, pubkey, created_at, tags, content, sig})
+                    content: JSON.stringify({id, kind, pubkey, created_at, tags, content, sig}),
+                    pubkey: pubkey,
                 }, ...prevMessages]);
             });
         } catch (error) {
@@ -83,15 +86,23 @@ export default function App() {
                 localStorage.setItem("reqHistory", JSON.stringify(newHistory));
             }
 
-            setTimeout(async () => {
+            await setTimeout(async () => {
                 const b = await ndk.subscribe(
                     json,
                     {closeOnEose: false}
                 );
 
-                b.on("event", (event) => {
+                b.on("event", async (event) =>{
+                    const user = ndk.getUser({hexpubkey: event.pubkey})
+                    const userProfile = await user.fetchProfile();
+                    console.log('userprofile', userProfile)
                     // append event.content to the messages
-                    setMessages(prevMessages => [{type: "from", content: JSON.stringify(event.content) }, ...prevMessages]);
+                    setMessages(prevMessages => [{
+                        type: "from",
+                        content: event.content,
+                        pubkey: event.pubkey,
+                        sender: userProfile
+                    }, ...prevMessages]);
                     console.log(`received event on b`, event.id, event.content)
                 });
             }, 500);
