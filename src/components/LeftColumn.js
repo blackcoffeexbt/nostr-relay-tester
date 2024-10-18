@@ -1,13 +1,14 @@
 export default function LeftColumn({history, reqHistory, loadQuery, deleteQuery, loadRequestQuery, deleteRequestQuery}) {
+    console.log('history', history);
     return (
         <aside className="w-1/5 p-4 bg-gray-100">
-            <div className=" overflow-auto h-1/2">
+            <div className="overflow-auto h-1/2">
                 <h2 className="text-lg mb-2">Event History</h2>
                 <ul>
                     {history.map((query, index) => (
                         <li key={index} className="flex items-center mb-2">
                             <button
-                                className="flex-1 text-left p-2 bg-gray-200"
+                                className="text-left p-2 bg-gray-200 text-wrap max-w-80 overflow-hidden"
                                 onClick={() => loadQuery(query)}
                             >
                                 {query}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, Fragment} from 'react';
 import NDK, {NDKFilter, NDKPrivateKeySigner, NDKEvent, NDKDVMJobResult, NDKNip07Signer} from "@nostr-dev-kit/ndk";
 import Header from './components/Header';
 import LeftColumn from './components/LeftColumn';
@@ -49,8 +49,12 @@ export default function App() {
             json.created_at = Math.floor(Date.now() / 1000);
             const updatedMessage = JSON.stringify(json);
 
-            if (!history.includes(updatedMessage)) {
-                const newHistory = [updatedMessage, ...history];
+            let jsonWithoutCreatedAt = JSON.parse(updatedMessage);
+            delete jsonWithoutCreatedAt.created_at;
+            const messageWithoutCreatedAt = JSON.stringify(jsonWithoutCreatedAt);
+
+            if (!history.includes(messageWithoutCreatedAt)) {
+                const newHistory = [messageWithoutCreatedAt, ...history];
                 setHistory(newHistory);
                 localStorage.setItem("history", JSON.stringify(newHistory));
             }
@@ -81,6 +85,10 @@ export default function App() {
             const json = JSON.parse(message);
             const updatedMessage = JSON.stringify(json);
 
+            delete json.created_at;
+            message = JSON.stringify(json);
+
+
             if (!reqHistory.includes(message)) {
                 const newHistory = [updatedMessage, ...reqHistory];
                 setReqHistory(newHistory);
@@ -93,7 +101,7 @@ export default function App() {
                     {closeOnEose: false}
                 );
 
-                b.on("event", async (event) =>{
+                b.on("event", async (event) => {
                     const user = ndk.getUser({hexpubkey: event.pubkey})
                     const userProfile = await user.fetchProfile();
                     console.log('userprofile', userProfile)
@@ -140,18 +148,27 @@ export default function App() {
         <div className="flex flex-col h-screen">
             <Header connectRelay={connectRelay} status={status}/>
             <div className="flex flex-1">
-                <LeftColumn history={history.length ? history : ["{\"kind\":1,\"content\":\"hi mum\"}"]}
-                            reqHistory={reqHistory.length ? reqHistory : ["{\"kinds\":[1],\"limit\":1}"]}
-                            loadQuery={loadQuery}
-                            deleteQuery={deleteQuery}
-                            loadRequestQuery={loadRequestQuery} deleteRequestQuery={deleteRequestQuery}/>
-                <CenterColumn message={currentMessage} setMessage={setCurrentMessage}
-                              req={currentRequest}
-                              setReq={setCurrentRequest}
-                              sendMessage={sendMessage}
-                              sendReq={sendReq}
-                />
-                <RightColumn messages={messages}/>
+                {status === "connected" &&
+                    <Fragment>
+                        <LeftColumn history={history.length ? history : ["{\"kind\":1,\"content\":\"hi mum\"}"]}
+                                    reqHistory={reqHistory.length ? reqHistory : ["{\"kinds\":[1],\"limit\":1}"]}
+                                    loadQuery={loadQuery}
+                                    deleteQuery={deleteQuery}
+                                    loadRequestQuery={loadRequestQuery} deleteRequestQuery={deleteRequestQuery}/>
+                        <CenterColumn message={currentMessage} setMessage={setCurrentMessage}
+                                      req={currentRequest}
+                                      setReq={setCurrentRequest}
+                                      sendMessage={sendMessage}
+                                      sendReq={sendReq}
+                        />
+                        <RightColumn messages={messages}/>
+                    </Fragment>
+                }
+                { status === "disconnected" &&
+                    <div className="flex-1 flex justify-center">
+                        <p className="text-2xl">Connect to a relay to get started</p>
+                    </div>
+                }
             </div>
         </div>
     );
