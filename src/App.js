@@ -63,6 +63,7 @@ export default function App() {
             ndkEvent.publish().then(() => {
                 // Only include relevant properties
                 const {id, kind, pubkey, created_at, tags, content, sig} = ndkEvent;
+                console.log("Event published", ndkEvent);
                 setMessages(prevMessages => [{
                     type: "from",
                     content: JSON.stringify({id, kind, pubkey, created_at, tags, content, sig}),
@@ -99,6 +100,7 @@ export default function App() {
                     // append event.content to the messages
                     setMessages(prevMessages => [{
                         type: "from",
+                        event: event,
                         content: event.content,
                         pubkey: event.pubkey,
                         sender: userProfile
