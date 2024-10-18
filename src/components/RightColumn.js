@@ -14,14 +14,19 @@ export default function RightColumn({messages}) {
                             msg.type === "to" ? "border-black" : "border-blue-600"
                         } border-2`}
                     >
+                        <p><strong>Content</strong></p>
+                        <pre className={"text-wrap rounded text-sm break-words bg-white p-2 border-r-4"}>
+                        {msg.content}
+                        </pre>
                         {msg.event &&
                             <Fragment>
-                                Raw Event Data:
-                                {JSON.stringify(msg.event.rawEvent())}
+                                <p><strong>Raw Event Data</strong></p>
+                                <pre className={"text-wrap  rounded text-sm break-words bg-white p-2 border-r-4"}>
+                                    {JSON.stringify(msg.event.rawEvent())}
+                                </pre>
                             </Fragment>
                         }
 
-                        Content: {msg.content}
                         {msg.sender &&
                             <a className="flex mt-4" target="_blank"
                                href={`https://njump.me/${msg.pubkey ? nip19.npubEncode(msg.pubkey) : ''}`}>

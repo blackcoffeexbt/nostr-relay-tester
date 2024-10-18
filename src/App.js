@@ -68,11 +68,11 @@ export default function App() {
                 // Only include relevant properties
                 const {id, kind, pubkey, created_at, tags, content, sig} = ndkEvent;
                 console.log("Event published", ndkEvent);
-                setMessages(prevMessages => [{
-                    type: "from",
-                    content: JSON.stringify({id, kind, pubkey, created_at, tags, content, sig}),
-                    pubkey: pubkey,
-                }, ...prevMessages]);
+                // setMessages(prevMessages => [{
+                //     type: "from",
+                //     content: JSON.stringify({id, kind, pubkey, created_at, tags, content, sig}),
+                //     pubkey: pubkey,
+                // }, ...prevMessages]);
             });
         } catch (error) {
             alert("Invalid JSON");

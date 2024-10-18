@@ -17,15 +17,14 @@ export default function CenterColumn({message, req, setMessage, setReq, sendMess
         sendReq(req);
     }
 
-    return (
-        <section className="w-2/5 p-4 bg-gray-100">
+    return (<section className="w-2/5 p-4 bg-gray-100">
             <h2 className="text-lg mb-2">Publish Event</h2>
             <div className="mb-2">
         <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Enter your message here"
-            className="w-full p-2"
+            className="w-full p-2 h-64  rounded"
             rows="4"
         />
             </div>
@@ -39,13 +38,12 @@ export default function CenterColumn({message, req, setMessage, setReq, sendMess
             value={req}
             onChange={(e) => setReq(e.target.value)}
             placeholder="Enter your message here"
-            className="w-full p-2"
+            className="w-full p-2 rounded"
             rows="4"
         />
             </div>
             <button onClick={handleReqSubmit} className="p-2 bg-blue-600 text-white">
                 Send
             </button>
-        </section>
-    );
+        </section>);
 }
