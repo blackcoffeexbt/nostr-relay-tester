@@ -148,9 +148,11 @@ export default function App() {
         if (!history.length) {
             // add an example DVM event
             let query2 = `{"content":"","kind":5107,"tags":[["i","[{\\"method\\": \\"getTemperature\\",\\"params\\": [\\"unit\\", \\"celcius\\"]}]","text","wss://relay.nostriot.com"],["output","text/plain"],["p","22b9d2fa2910974d02138af239a341a09ec60560338eb0f8814ec5729ae25c64"]]}`
+            // get location temp
+            let query3 = `{"content":"","kind":5107,"tags":[["i","[{\"method\": \"getLocationTemperature\",\"params\": [\"location\", \"50,1\"]}]","text","wss://relay.nostriot.com"],["output","text/plain"],["p","22b9d2fa2910974d02138af239a341a09ec60560338eb0f8814ec5729ae25c64"]]}`
             let query1 = "{\"kind\":1,\"content\":\"hi mum\"}";
-            setHistory([query1, query2]);
-            localStorage.setItem("history", JSON.stringify([query1, query2]));
+            setHistory([query3, query2, query1]);
+            localStorage.setItem("history", JSON.stringify([query3, query2, query1]));
         }
     }, [history]);
 

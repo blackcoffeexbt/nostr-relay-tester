@@ -9,7 +9,7 @@ export default function RightColumn({messages}) {
     };
 
     return (
-        <section className="w-full md:w-2/5  p-4 bg-gray-100 md:order-3">
+        <section className="w-full md:w-1/4  p-4 bg-gray-100 md:order-3">
             <h2 className="text-lg mb-2">Messages and Events</h2>
             <div className="overflow-auto">
                 {messages.map((msg, index) => (
@@ -25,8 +25,8 @@ export default function RightColumn({messages}) {
                         {msg.event &&
                             <Fragment>
                                 <p><strong>Raw Event Data</strong></p>
-                                <pre className={"text-wrap  rounded text-sm break-words bg-white p-2 border-r-4"}>
-                                    {JSON.stringify(msg.event.rawEvent())}
+                                <pre className={"max-h-40 overflow-auto text-wrap rounded text-xs break-words bg-white p-2 border-r-4"}>
+                                {JSON.stringify(msg.event.rawEvent(), null, 2)}
                                 </pre>
                             </Fragment>
                         }
