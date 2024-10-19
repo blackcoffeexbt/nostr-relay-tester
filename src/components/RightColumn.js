@@ -2,22 +2,26 @@ import {nip19} from "nostr-tools";
 import {Fragment} from "react";
 
 export default function RightColumn({messages}) {
+    // define an anon function that formats message content replacing images in the string with img tags
+    // make sure the URL ends with an image extension
+    const formatMessageContent = (content) => {
+        return content.replace(/(https?:\/\/[^\s]+(?=\.(jpg|jpeg|png|gif))\.\2)/g, '<img src="$1" alt="image" />');
+    };
 
     return (
         <section className="w-2/5 p-4 bg-gray-100">
-            <h2 className="text-lg mb-2">Messages</h2>
+            <h2 className="text-lg mb-2">Messages and Events</h2>
             <div className="h-lvh overflow-auto">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
                         className={`p-2 mb-2 ${
-                            msg.type === "to" ? "border-black" : "border-blue-600"
-                        } border-2`}
+                            msg.type === "to" ? "border-black" : "border-gray-400"
+                        } border-2 border-r-4 rounded`}
                     >
                         <p><strong>Content</strong></p>
-                        <pre className={"text-wrap rounded text-sm break-words bg-white p-2 border-r-4"}>
-                        {msg.content}
-                        </pre>
+                        <div dangerouslySetInnerHTML={{__html: formatMessageContent(msg.content)}} className={"text-wrap rounded text-sm break-words bg-white p-2 border-r-4"}>
+                        </div>
                         {msg.event &&
                             <Fragment>
                                 <p><strong>Raw Event Data</strong></p>

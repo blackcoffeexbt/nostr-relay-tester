@@ -165,8 +165,11 @@ export default function App() {
                     </Fragment>
                 }
                 { status === "disconnected" &&
-                    <div className="flex-1 flex justify-center">
-                        <p className="text-2xl">Connect to a relay to get started</p>
+                    <div className="flex-1 flex justify-center mt-4">
+                        <div className={"text-center"}>
+                            <p className="text-2xl">Connect to a relay to get started.</p>
+                            <p>You need to have a NIP-07 extension installed to use this tool.</p>
+                        </div>
                     </div>
                 }
             </div>
