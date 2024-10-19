@@ -8,10 +8,10 @@ export default function LeftColumn({
                                    }) {
     console.log('history', history);
     return (
-        <aside className="w-1/4 p-4 bg-gray-100">
+        <aside className="w-full md:w-1/4 p-4 bg-gray-100 order-2 md:order-1">
             <h2 className="text-lg">Event History</h2>
             <p className={"text-sm mb-2"}>Click to load an event</p>
-            <div className="overflow-auto h-1/2 border border-gray-300 p-2 border-r-4 rounded">
+            <div className="overflow-auto md:h-1/2 border border-gray-300 p-2 border-r-4 rounded">
 
                 <ul>
                     {history.map((query, index) => (
@@ -37,7 +37,7 @@ export default function LeftColumn({
 
             <h2 className="text-lg m-0">Request History</h2>
             <p className={"text-sm mb-2"}>Click to load a request</p>
-            <div className="overflow-auto h-1/2 border border-gray-300 p-2 border-r-4 rounded mt-1">
+            <div className="overflow-auto md:h-1/2 border border-gray-300 p-2 border-r-4 rounded mt-1">
                 <ul>
                     {reqHistory.map((query, index) => (
                         <li key={index} className="flex items-center mb-2">

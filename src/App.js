@@ -167,7 +167,7 @@ export default function App() {
     return (
         <div className="flex flex-col h-screen">
             <Header connectRelay={connectRelay} status={status}/>
-            <div className="flex flex-1">
+            <div className="flex flex-1 flex-col md:flex-row">
                 {status === "connected" &&
                     <Fragment>
                         <LeftColumn history={history}

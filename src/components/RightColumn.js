@@ -9,9 +9,9 @@ export default function RightColumn({messages}) {
     };
 
     return (
-        <section className="w-2/5 p-4 bg-gray-100">
+        <section className="w-full md:w-2/5  p-4 bg-gray-100 md:order-3">
             <h2 className="text-lg mb-2">Messages and Events</h2>
-            <div className="h-lvh overflow-auto">
+            <div className="overflow-auto">
                 {messages.map((msg, index) => (
                     <div
                         key={index}

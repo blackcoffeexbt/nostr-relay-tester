@@ -17,7 +17,7 @@ export default function CenterColumn({message, req, setMessage, setReq, sendMess
         sendReq(req);
     }
 
-    return (<section className="w-2/5 p-4 bg-gray-100">
+    return (<section className="w-full md:w-2/5 p-4 bg-gray-100 md:order-2">
         <h2 className="text-lg mb-2">Publish Event</h2>
         <div className="mb-2">
         <textarea
