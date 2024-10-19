@@ -16,8 +16,8 @@ export default function RightColumn({messages}) {
                     <div
                         key={index}
                         className={`p-2 mb-2 ${
-                            msg.type === "to" ? "border-black" : "border-gray-400"
-                        } border-2 border-r-4 rounded`}
+                            msg.type === "to" ? "border-black" : "border-gray-300"
+                        } border border-r-4 rounded`}
                     >
                         <p><strong>Content</strong></p>
                         <div dangerouslySetInnerHTML={{__html: formatMessageContent(msg.content)}} className={"text-wrap rounded text-sm break-words bg-white p-2 border-r-4"}>

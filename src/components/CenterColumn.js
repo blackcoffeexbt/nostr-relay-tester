@@ -23,8 +23,8 @@ export default function CenterColumn({message, req, setMessage, setReq, sendMess
         <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Enter your message here"
-            className="w-full p-2 h-64  rounded font-mono text-sm"
+            placeholder="Enter unsigned event JSON here"
+            className="w-full p-2 md:h-64 h-40 rounded font-mono text-sm"
             rows="4"
         />
         </div>
@@ -38,7 +38,7 @@ export default function CenterColumn({message, req, setMessage, setReq, sendMess
             value={req}
             onChange={(e) => setReq(e.target.value)}
             placeholder="Enter your message here"
-            className="w-full p-2 rounded  font-mono text-sm"
+            className="w-full p-2 md:h-64 h-40 rounded font-mono text-sm"
             rows="4"
         />
         </div>

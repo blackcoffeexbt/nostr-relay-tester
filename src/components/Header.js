@@ -14,10 +14,9 @@ export default function Header({ connectRelay, status }) {
                     placeholder="wss://relay.nostriot.com"
                     className="flex-1 p-2 mr-2 text-black"
                 />
-                <button onClick={() => connectRelay(relayURI)} className="p-2 bg-blue-600">
-                    Connect
+                <button onClick={() => connectRelay(relayURI)} className={`p-2 ${status === "connected" ? "bg-green-500" : "bg-blue-500"} text-white`}>
+                    {status === "connected" ? "Connected" : "Connect"}
                 </button>
-                <span className="ml-4">{status}</span>
             </div>
         </header>
     );
