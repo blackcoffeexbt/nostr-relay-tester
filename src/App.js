@@ -144,14 +144,34 @@ export default function App() {
         localStorage.setItem("reqHistory", JSON.stringify(newHistory));
     };
 
+    useEffect(() => {
+        if (!history.length) {
+            // add an example DVM event
+            let query2 = `{"content":"","kind":5107,"tags":[["i","[{\\"method\\": \\"getTemperature\\",\\"params\\": [\\"unit\\", \\"celcius\\"]}]","text","wss://relay.nostriot.com"],["output","text/plain"],["p","22b9d2fa2910974d02138af239a341a09ec60560338eb0f8814ec5729ae25c64"]]}`
+            let query1 = "{\"kind\":1,\"content\":\"hi mum\"}";
+            setHistory([query1, query2]);
+            localStorage.setItem("history", JSON.stringify([query1, query2]));
+        }
+    }, [history]);
+
+    useEffect(() => {
+        if (!reqHistory.length) {
+            let query1 = `{"kinds":[31990,5107,6107,36107],"limit":1}`
+            let query2 = `{"kinds":[1],"limit":1}`
+
+            setReqHistory([query1, query2]);
+            localStorage.setItem("reqHistory", JSON.stringify([query1, query2]));
+        }
+    }, [reqHistory]);
+
     return (
         <div className="flex flex-col h-screen">
             <Header connectRelay={connectRelay} status={status}/>
             <div className="flex flex-1">
                 {status === "connected" &&
                     <Fragment>
-                        <LeftColumn history={history.length ? history : ["{\"kind\":1,\"content\":\"hi mum\"}"]}
-                                    reqHistory={reqHistory.length ? reqHistory : ["{\"kinds\":[1],\"limit\":1}"]}
+                        <LeftColumn history={history}
+                                    reqHistory={reqHistory}
                                     loadQuery={loadQuery}
                                     deleteQuery={deleteQuery}
                                     loadRequestQuery={loadRequestQuery} deleteRequestQuery={deleteRequestQuery}/>
