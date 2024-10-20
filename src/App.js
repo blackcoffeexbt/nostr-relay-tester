@@ -139,8 +139,8 @@ export default function App() {
     };
 
     const deleteRequestQuery = (index) => {
-        const newHistory = history.filter((_, i) => i !== index);
-        setHistory(newHistory);
+        const newHistory = reqHistory.filter((_, i) => i !== index);
+        setReqHistory(newHistory);
         localStorage.setItem("reqHistory", JSON.stringify(newHistory));
     };
 
